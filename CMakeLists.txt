@@ -32,8 +32,16 @@ write_basic_package_version_file("${version_pkg_config}" COMPATIBILITY SameMajor
 configure_package_config_file("cmake/Config.cmake.in" "${project_pkg_config}" INSTALL_DESTINATION "${pkg_config_install_dir}")
 
 add_subdirectory(trng)
-add_subdirectory(examples)
-add_subdirectory(tests)
+
+option(TRNG_ENABLE_EXAMPLES "Enable the examples ?" OFF)
+if (${TRNG_ENABLE_EXAMPLES})
+    add_subdirectory(examples)
+endif ()
+
+option(TRNG_ENABLE_TESTS "Enable the unit tests ?" OFF)
+if (${TRNG_ENABLE_TESTS})
+    add_subdirectory(tests)
+endif ()
 
 # Install package config files.
 install(FILES "${project_pkg_config}" "${version_pkg_config}" DESTINATION "${pkg_config_install_dir}")
